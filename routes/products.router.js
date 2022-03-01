@@ -26,8 +26,9 @@ router.get('/:id', (req, res) => {
    const { id } = req.params;
    res.json({
       id,
-      product: 'Product 1',
-      price: 1000
+      name: faker.commerce.productName(),
+      price: parseInt(faker.commerce.price(), 10),
+      image: faker.image.imageUrl()
    });
 });
 

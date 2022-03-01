@@ -18,9 +18,25 @@ router.get('/', (req, res) => {
    res.json(users);
 })
 
+router.get('/:id', (req, res) => {
+   const { id } = req.params;
+   if(id === '20'){
+      res.status(404).json({
+         message: 'Not found'
+      });
+   } else {
+      res.status(200).json({
+         id,
+         name: faker.name.firstName(),
+         last: faker.name.lastName(),
+         gender: faker.name.gender()
+      });
+   }
+})
+
 router.post('/', (req, res) => {
    const body = req.body;
-   res.json({
+   res.status(201).json({
       message: 'Create',
       data: body
    });

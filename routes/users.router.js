@@ -1,63 +1,37 @@
 const express = require('express');
-const faker = require('community-faker');
+const UsersService = require('./../services/users.service');
 
 const router = express.Router();
+const service = new UsersService();
 
 router.get('/', (req, res) => {
-   const users = [];
-   let { size } = req.query;
-   size = size || 10;
-
-   for (let i = 0; i < size; i++){
-      users.push({
-         name: faker.name.firstName(),
-         last: faker.name.lastName(),
-         gender: faker.name.gender()
-      });
-   }
+   const users = service.find();
    res.json(users);
 })
 
 router.get('/:id', (req, res) => {
    const { id } = req.params;
-   if(id === '20'){
-      res.status(404).json({
-         message: 'Not found'
-      });
-   } else {
-      res.status(200).json({
-         id,
-         name: faker.name.firstName(),
-         last: faker.name.lastName(),
-         gender: faker.name.gender()
-      });
-   }
+   const user = service.findOne(id);
+   res.json(user);
 })
 
 router.post('/', (req, res) => {
    const body = req.body;
-   res.status(201).json({
-      message: 'Create',
-      data: body
-   });
+   const newUser = service.create(body);
+   res.json(newUser);
 })
 
 router.patch('/:id', (req, res) => {
    const { id } = req.params;
    const body = req.body;
-   res.json({
-      message: 'Update',
-      data: body,
-      id
-   });
+   const userChanged = service.update(id, body);
+   res.json(userChanged);
 })
 
 router.delete('/:id', (req, res) => {
    const { id } = req.params;
-   res.json({
-      message: 'Delete',
-      id
-   });
+   const userDeleted = service.delete(id);
+   res.json(userDeleted);
 })
 
 module.exports = router;

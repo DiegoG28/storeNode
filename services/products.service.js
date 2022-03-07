@@ -9,7 +9,7 @@ class ProductsService {
 
    generate() {
       const size = 100;
-      for (let i = 0; i < size; i++){
+      for (let i = 0; i < size; i++) {
          this.products.push({
             id: faker.datatype.uuid(),
             name: faker.commerce.productName(),
@@ -32,13 +32,13 @@ class ProductsService {
       return this.products;
    }
 
-   findOne(id){
+   findOne(id) {
       return this.products.filter(item => item.id === id);
    }
 
    update(id, changes) {
       const index = this.products.findIndex(item => item.id === id);
-      if(index === -1){
+      if (index === -1) {
          throw new Error('product not found');
       }
       const product = this.products[index];
@@ -52,11 +52,11 @@ class ProductsService {
 
    delete(id) {
       const index = this.products.findIndex(item => item.id === id);
-      if(index === -1){
+      if (index === -1) {
          throw new Error('product not found');
       }
       this.products.splice(index, 1);
-      return {id};
+      return { id };
    }
 
 }

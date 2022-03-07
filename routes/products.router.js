@@ -22,14 +22,14 @@ router.post('/', (req, res) => {
 })
 
 router.patch('/:id', (req, res) => {
-	const { id } = req.params;
-	const body = req.body;
+   const { id } = req.params;
+   const body = req.body;
    const productChanged = service.update(id, body);
    res.json(productChanged);
 })
 
 router.delete('/:id', (req, res) => {
-	const { id } = req.params;
+   const { id } = req.params;
    const productDeleted = service.delete(id);
    res.json(productDeleted);
 })

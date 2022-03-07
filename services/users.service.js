@@ -9,7 +9,7 @@ class UsersService {
 
    generate() {
       const size = 100;
-      for (let i = 0; i < size; i++){
+      for (let i = 0; i < size; i++) {
          this.users.push({
             id: faker.datatype.uuid(),
             name: faker.name.firstName(),
@@ -38,7 +38,7 @@ class UsersService {
 
    update(id, changes) {
       const index = this.users.findIndex(item => item.id === id);
-      if(index === -1){
+      if (index === -1) {
          throw new Error('user not found');
       }
       const user = this.users[index];
@@ -52,11 +52,11 @@ class UsersService {
 
    delete(id) {
       const index = this.users.findIndex(item => item.id === id);
-      if(index === -1){
+      if (index === -1) {
          throw new Error('user not found');
       }
       this.users.splice(index, 1);
-      return {id};
+      return { id };
    }
 }
 

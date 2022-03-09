@@ -2,37 +2,34 @@ const express = require('express');
 
 const UserService = require('../services/user.service');
 
+const { validateInputs, validatePost, validateGet, validateId } = require('../middlewares/validate');
+
 const router = express.Router();
 const service = new UserService();
 
-router.get('/', (req, res) => {
-    const user = service.find();
-    res.json(user);
+router.get('/', validateGet(service), (req, res) => {
+	const user = service.find();
+	res.json(user);
 });
 
-router.get('/:id', (req, res) => {
-    const {id} = req.params;
-    const user = service.findOne(id);
-    res.json(user);
+router.get('/:id', validateId(service), (req, res) => {
+	const user = service.findOne(res.locals.id);
+	res.json(user);
 });
 
-router.post('/', (req, res) => {
-    const body = req.body;
-    const newUser = service.validate(body);
-    res.json(newUser);
+router.post('/', validateInputs, validatePost(service), (req, res) => {
+	const newUser = service.create(res.locals.body);
+	res.status(200).json(newUser);
 });
 
-router.put('/:id', (req, res) => {
-	const {id} = req.params;
-	const body = req.body;
-	const usuarioActualizado = service.update(id, body);
-	res.json(usuarioActualizado);
+router.put('/:id', validateInputs, validateId(service), (req, res) => {
+	const changedUser = service.update(res.locals.id, res.locals.body);
+	res.status(200).json(changedUser);
 })
 
-router.delete('/:id', (req, res) => {
-	const {id} = req.params;
-	const usuarioEliminado = service.delete(id);
-	res.json(usuarioEliminado);
+router.delete('/:id', validateId(service), (req, res) => {
+	const deletedUser = service.delete(res.locals.id);
+	res.json(deletedUser);
 })
 
 module.exports = router;

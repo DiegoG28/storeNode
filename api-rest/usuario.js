@@ -61,7 +61,7 @@ app.post('/usuario', function(req, res){
             error:true,
             codigo:502,
             mensaje: 'El campo de nombre y apeliido son requeridos'
-        };  
+        };
     }else{
         if(usuario.nombre !== '' || usuario.apellido !== '')
         {
@@ -69,7 +69,7 @@ app.post('/usuario', function(req, res){
                 error:true,
                 codigo:503,
                 mensaje: 'El usuario ya fue regisgrado'
-            }; 
+            };
 
         }
         else{
@@ -82,7 +82,7 @@ app.post('/usuario', function(req, res){
                     codigo:200,
                     mensaje: 'Usuario creado',
                     respuesta: usuario
-                }; 
+                };
         }
     }
     res.send(respuesta);
@@ -116,37 +116,37 @@ app.put('/usuario', function (req, res) {
                     };
             }
     }
-    
+
     res.send(respuesta);
 });
 app.delete('/usuario', function (req, res) {
     if(usuario.nombre === '' || usuario.apellido === '') {
-        respuesta = 
+        respuesta =
         {
             error: true,
             codigo: 501,
             mensaje: 'El usuario no ha sido creado'
         };
     } else {
-        respuesta = 
+        respuesta =
         {
             error: false,
             codigo: 200,
             mensaje: 'Usuario eliminado'
         };
-            usuario = { 
-            nombre: '', 
-            apellido: '' 
+            usuario = {
+            nombre: '',
+            apellido: ''
         };
     }
     res.send(respuesta);
 });
 
 
-app.use(function(req, res, next) {
+app.use(function(req, res) {
     respuesta = {
-        error: true, 
-        codigo: 404, 
+        error: true,
+        codigo: 404,
         mensaje: 'URL no encontrada'
     };
     res.status(404).send(respuesta);
@@ -156,7 +156,7 @@ app.use(function(req, res, next) {
 
 
 app.listen(4000, () => {
-    
+
     console.log("El servidor está en el puerto 4000");
 
 });

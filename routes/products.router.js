@@ -25,23 +25,25 @@ router.post('/', async (req, res) => {
    res.json(newProduct);
 })
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req, res, next) => {
    try {
       const { id } = req.params;
       const body = req.body;
       const productChanged = await service.update(id, body);
       res.json(productChanged);
    } catch (error) {
-      res.json({
-         message: error.message
-      });
+      next(error);
    }
 })
 
-router.delete('/:id', async (req, res) => {
-   const { id } = req.params;
-   const productDeleted = await service.delete(id);
-   res.json(productDeleted);
+router.delete('/:id', async (req, res, next) => {
+   try {
+      const { id } = req.params;
+      const productDeleted = await service.delete(id);
+      res.json(productDeleted);
+   } catch (error) {
+      next(error);
+   }
 })
 
 module.exports = router;

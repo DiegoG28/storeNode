@@ -1,4 +1,5 @@
 const faker = require('community-faker');
+const boom = require('@hapi/boom');
 
 class CategoriesService {
 
@@ -7,18 +8,19 @@ class CategoriesService {
       this.generate();
    }
 
-   generate() {
+   async generate() {
       const size = 10;
-      for (let i = 0; i < size; i++){
+      for (let i = 0; i < size; i++) {
          this.categories.push({
             id: faker.datatype.uuid(),
-            category: faker.commerce.department()
+            category: faker.commerce.department(),
+            isBlock: faker.datatype.boolean()
          });
       }
    }
 
-   create(data) {
-      const newCategorie ={
+   async create(data) {
+      const newCategorie = {
          id: faker.datatype.uuid(),
          ...data
       }
@@ -26,18 +28,29 @@ class CategoriesService {
       return newCategorie;
    }
 
-   find() {
-      return this.categories;
+   async find() {
+      return new Promise((resolve, reject) => {
+         setTimeout(() => {
+            resolve(this.categories);
+         }, 3000);
+      })
    }
 
-   findOne(id) {
-      return this.categories.find(item => item.id === id);
+   async findOne(id) {
+      const categorie = this.categories.find(item => item.id === id);
+      if (!categorie) {
+         throw boom.notFound('categorie not found');
+      }
+      if (categorie.isBlock) {
+         throw boom.conflict('categorie is blocked');
+      }
+      return categorie;
    }
 
-   update(id, changes) {
+   async update(id, changes) {
       const index = this.categories.findIndex(item => item.id === id);
-      if(index === -1){
-         throw new Error ('categorie not found');
+      if (index === -1) {
+         throw boom.notFound('categorie not found');
       }
       const categorie = this.categories[index];
       const categorieChanged = {
@@ -48,10 +61,10 @@ class CategoriesService {
       return categorieChanged;
    }
 
-   delete(id) {
+   async delete(id) {
       const index = this.categories.findIndex(item => item.id === id);
-      if(index === -1){
-         throw new Error ('categorie not found');
+      if (index === -1) {
+         throw boom.notFound('categorie not found');
       }
       this.categories.splice(index, 1);
       return { id };

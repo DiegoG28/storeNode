@@ -180,3 +180,4 @@ $RECYCLE.BIN/
 *.lnk
 
 .DS_Store
+postgres_data

@@ -181,3 +181,4 @@ $RECYCLE.BIN/
 
 .DS_Store
 postgres_data
+mysql_data

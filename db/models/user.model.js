@@ -1,44 +1,17 @@
-const {Model, DataTypes, Sequelize} = require('sequelize');
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-const USER_TABLE = 'users';
-
-const UserSchema = {
-   id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER
-   },
-   email: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      unique: true
-   },
-   password: {
-      allowNull: false,
-      type: DataTypes.STRING
-   },
-   createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      field: 'created_at',
-      defaultValue: Sequelize.NOW
+const userSchema = new Schema({
+   name: String,
+   last: String,
+   meta: {
+      votes: Number,
+      favs: Number
    }
-};
+});
 
-class User extends Model {
-   static associate() {
-      //models
-   }
+const User = mongoose.model('User', userSchema);
 
-   static config(sequelize) {
-      return {
-         sequelize,
-         tableName: USER_TABLE,
-         modelName: 'User',
-         timestamps: false
-      }
-   }
-};
-
-module.exports = { USER_TABLE, UserSchema, User };
+module.exports = {
+   User: User
+}

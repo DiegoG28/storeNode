@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:id',
-   validatorHandler(getUserSchema, 'params'),
+   //validatorHandler(getUserSchema, 'params'),
    async (req, res, next) => {
       try {
          const { id } = req.params;
@@ -26,7 +26,7 @@ router.get('/:id',
 );
 
 router.post('/',
-   validatorHandler(createUserSchema, 'body'),
+   //validatorHandler(createUserSchema, 'body'),
    async (req, res, next) => {
       try {
          const body = req.body;
@@ -39,8 +39,8 @@ router.post('/',
 );
 
 router.patch('/:id',
-   validatorHandler(getUserSchema, 'params'),
-   validatorHandler(updateUserSchema, 'body'),
+   //validatorHandler(getUserSchema, 'params'),
+   //validatorHandler(updateUserSchema, 'body'),
    async (req, res, next) => {
       try {
          const { id } = req.params;
@@ -54,7 +54,7 @@ router.patch('/:id',
 );
 
 router.delete('/:id',
-   validatorHandler(getUserSchema, 'params'),
+   //validatorHandler(getUserSchema, 'params'),
    async (req, res, next) => {
       try {
          const { id } = req.params;

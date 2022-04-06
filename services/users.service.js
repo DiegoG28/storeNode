@@ -14,7 +14,8 @@ class UsersService {
    }
 
    async find() {
-
+      const users = await User.find();
+      return users;
    }
 
    async findOne(id) {

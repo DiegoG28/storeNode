@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { config } = require('../config/config');
+const config = require('../config/config');
 
 const USER = encodeURI(config.dbUser);
 const PASSWORD = encodeURI(config.dbPassword);

@@ -4,7 +4,7 @@ const { config } = require('../config/config');
 
 const USER = encodeURI(config.dbUser);
 const PASSWORD = encodeURI(config.dbPassword);
-const URI = `mongodb://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/`;
+const URI = `mongodb://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}?authSource=admin`;
 
 mongoose.connect(URI);
 
